@@ -15,7 +15,7 @@ RUN VERSION=${version} PLUGINS=${plugins} ENABLE_TELEMETRY=false /bin/sh /usr/bi
 # Final stage
 #
 FROM alpine:3.8
-LABEL maintainer "Abiola Ibrahim <abiola89@gmail.com>"
+LABEL maintainer "Devin Slick <devin.slick@gmail.com>"
 
 ARG version="0.11.3"
 LABEL caddy_version="$version"
@@ -35,8 +35,9 @@ COPY --from=builder /install/caddy /usr/bin/caddy
 RUN /usr/bin/caddy -version
 RUN /usr/bin/caddy -plugins
 
-EXPOSE 80 443 2015
+EXPOSE 80 443
 VOLUME /root/.caddy /srv
+VOLUME /data
 WORKDIR /srv
 
 COPY Caddyfile /etc/Caddyfile
@@ -47,4 +48,3 @@ COPY --from=builder /go/bin/parent /bin/parent
 
 ENTRYPOINT ["/bin/parent", "caddy"]
 CMD ["--conf", "/etc/Caddyfile", "--log", "stdout", "--agree=$ACME_AGREE"]
-
