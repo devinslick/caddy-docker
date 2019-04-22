@@ -41,7 +41,6 @@ VOLUME /data
 WORKDIR /srv
 
 COPY Caddyfile /etc/Caddyfile
-COPY index.html /srv/index.html
 
 # install process wrapper
 COPY --from=builder /go/bin/parent /bin/parent
